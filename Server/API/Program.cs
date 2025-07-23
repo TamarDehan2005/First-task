@@ -37,6 +37,14 @@ builder.Services.AddCors(options =>
     });
 });
 
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.ListenAnyIP(80);
+
+});
+
+
+
 var app = builder.Build();
 
 app.UseCors("AllowAll");
