@@ -17,18 +17,20 @@ namespace API.Controllers
         }
 
         [HttpGet("total")]
-        public async Task<ActionResult<decimal>> GetTotalPayments()
+        public async Task<ActionResult<int>> GetTotalPayments()
         {
             try
             {
                 var total = await _paymentBLL.GetTotalPaymentsByMonthAsync(DateTime.UtcNow.AddMonths(-1));
-                return Ok(total);
+                var totalRounded = (int)Math.Round(total); 
+                return Ok(totalRounded);
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
         }
+
 
         [HttpGet("percentage-change")]
         public async Task<ActionResult<string>> GetPercentageChangeLastMonth()

@@ -42,7 +42,9 @@ namespace BLL.Services
             }
 
             decimal percentageChange = ((lastMonthTotal - twoMonthsAgoTotal) / (decimal)twoMonthsAgoTotal) * 100;
-            return percentageChange >= 0 ? $"+{percentageChange:F2}%" : $"{percentageChange:F2}%";
+            int rounded = (int)Math.Round(percentageChange);
+            return rounded >= 0 ? $"+{rounded}%" : $"{rounded}%";
         }
+
     }
 }
