@@ -3034,11 +3034,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\USER\\Desktop\\pp\\First-task\\Server\\DAL\\DAL.csproj",
+      "projectUniqueName": "C:\\Users\\USER\\Desktop\\ppppp\\First-task\\Server\\DAL\\DAL.csproj",
       "projectName": "DAL",
-      "projectPath": "C:\\Users\\USER\\Desktop\\pp\\First-task\\Server\\DAL\\DAL.csproj",
+      "projectPath": "C:\\Users\\USER\\Desktop\\ppppp\\First-task\\Server\\DAL\\DAL.csproj",
       "packagesPath": "C:\\Users\\USER\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\USER\\Desktop\\pp\\First-task\\Server\\DAL\\obj\\",
+      "outputPath": "C:\\Users\\USER\\Desktop\\ppppp\\First-task\\Server\\DAL\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

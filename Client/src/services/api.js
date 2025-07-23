@@ -1,4 +1,8 @@
-import axios from "axios";
+import axios from 'axios';
 
-export const getPayments = () => axios.get("http://backend/api/payments/total");
-export const getInvoices = () => axios.get("http://backend/api/invoices/count");
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:7106';
+
+export const getPaymentsTotal = () => axios.get(`${API_URL}/api/payments/total`);
+export const getPaymentsPercentageChange = () => axios.get(`${API_URL}/api/payments/percentage-change`);
+export const getInvoicesCount = () => axios.get(`${API_URL}/api/invoices/count`);
+export const getInvoicesPercentageChange = () => axios.get(`${API_URL}/api/invoices/percentage-change`);

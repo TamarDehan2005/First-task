@@ -1,6 +1,6 @@
 import React from 'react';
 import { ArrowRight } from 'lucide-react';
-import { thisMonthStats, newClients } from '../../data/dashboardMock'; 
+import { thisMonthStats, newClients } from '../../data/dashboardMock'; // 👈 נתיב נכון!
 
 const WelcomeClients = () => {
   const proposalStat = thisMonthStats.find(stat => stat.title === "Proposals");
