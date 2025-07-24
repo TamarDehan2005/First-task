@@ -1,47 +1,42 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using DAL.Enums;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DAL.Enums;
 
 namespace DAL.Models
 {
-  
+
     public class Payment
     {
         [Key]
-        public int PaymentId { get; set; }                     
+        public int PaymentId { get; set; }
 
         [Required]
-        [Column(TypeName = "decimal(18,2)")]                    
+        [Column(TypeName = "decimal(18,2)")]
         public decimal Amount { get; set; }
 
         [Required]
-        public Currency Currency { get; set; } 
+        public Currency Currency { get; set; }
 
         [Required]
-        public DateTime PaymentDate { get; set; }              
+        public DateTime PaymentDate { get; set; }
 
         [Required]
-        public PaymentStatus Status { get; set; }              
+        public PaymentStatus Status { get; set; }
 
         [MaxLength(50)]
-        public PaymentMethod Method { get; set; }                      
+        public PaymentMethod Method { get; set; }
 
         [MaxLength(100)]
-        public string? ReferenceNumber { get; set; }             
+        public string? ReferenceNumber { get; set; }
 
         [MaxLength(500)]
-        public string? Notes { get; set; }                       
+        public string? Notes { get; set; }
 
         [Required]
-        public int InvoiceId { get; set; }                     
+        public int InvoiceId { get; set; }
 
         [ForeignKey("InvoiceId")]
-        public Invoice? Invoice { get; set; }                 
+        public Invoice? Invoice { get; set; }
 
         [Required]
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;

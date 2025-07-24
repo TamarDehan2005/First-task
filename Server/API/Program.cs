@@ -2,8 +2,8 @@ using AutoMapper;
 using BLL.Api;
 using BLL.Services;
 using DAL.Api;
-using DAL.Services;
 using DAL.Models;
+using DAL.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);

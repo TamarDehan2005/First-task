@@ -1,8 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using DAL.Api;
 using DAL.Models;
-using DAL.Api;
+using Microsoft.EntityFrameworkCore;
 
 namespace DAL.Services
 {

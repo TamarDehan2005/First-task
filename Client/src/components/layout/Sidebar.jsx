@@ -32,7 +32,6 @@ const Sidebar = () => (
       </nav>
     </div>
 
-    {/* 🔻 הסרנו את border-t ו־pt-6 כדי שלא יהיה קו ורווח מיותר */}
     <div className="flex flex-col gap-4 text-sm text-gray-600 mt-6">
       <div className="flex items-center gap-2">
         <FaCog /> <span>Settings</span>

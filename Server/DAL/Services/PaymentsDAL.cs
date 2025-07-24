@@ -2,8 +2,6 @@
 using DAL.Enums;
 using DAL.Models;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace DAL.Services
 {

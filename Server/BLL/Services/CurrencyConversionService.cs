@@ -2,8 +2,6 @@
 using BLL.Models;
 using DAL.Enums;
 using Newtonsoft.Json;
-using System.Net.Http;
-using System.Threading.Tasks;
 
 namespace BLL.Services
 {
@@ -15,19 +13,6 @@ namespace BLL.Services
         {
             _httpClient = httpClient;
         }
-
-        //public async Task<decimal> ConvertToUSD(Currency currency, decimal amount)
-        //{
-        //    if (currency == Currency.USD)
-        //    {
-        //        return amount;
-        //    }
-
-        //    var response = await _httpClient.GetStringAsync($"https://api.exchangerate-api.com/v4/latest/{currency}");
-        //    var exchangeRates = JsonConvert.DeserializeObject<ExchangeRateResponse>(response);
-
-        //    return amount * exchangeRates.Rates["USD"];
-        //}
         public async Task<decimal> ConvertToUSD(Currency currency, decimal amount)
         {
             if (currency == Currency.USD)
@@ -44,7 +29,7 @@ namespace BLL.Services
             }
             catch (Exception ex)
             {
-                return amount; 
+                return amount;
             }
         }
     }
