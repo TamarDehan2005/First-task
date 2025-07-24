@@ -33,7 +33,7 @@ This project implements part of the functionality for an admin dashboard in an a
 ### Accessing the Application
 
 - Once the containers are running, you can access the application at:
-  - Swagger UI:[ [http://localhost:7106](http://localhost:7106)](http://localhost:7106/swagger/index.html)
+  - Swagger UI: [Swagger](http://localhost:7106/swagger/index.html)
   - React Application: [http://localhost:3000](http://localhost:3000)
 
 ## Features
