@@ -40,5 +40,8 @@ namespace DAL.Models
 
         [Required]
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public int UserId { get; set; }
+        [ForeignKey("UserId")]
+        public User? User { get; set; }
     }
 }

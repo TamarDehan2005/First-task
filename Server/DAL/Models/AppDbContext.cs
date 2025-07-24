@@ -9,7 +9,7 @@ namespace DAL.Models
 
         public DbSet<Invoice> Invoices { get; set; }
         public DbSet<Payment> Payments { get; set; }
-
+        public DbSet<User> Users { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -19,6 +19,16 @@ namespace DAL.Models
                 .WithOne(p => p.Invoice)
                 .HasForeignKey(p => p.InvoiceId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Invoice>()
+                .HasOne(i => i.User)
+                .WithMany()
+                .HasForeignKey(i => i.UserId);
+
+            modelBuilder.Entity<Payment>()
+                .HasOne(p => p.User)
+                .WithMany()
+                .HasForeignKey(p => p.UserId);
         }
     }
 }
