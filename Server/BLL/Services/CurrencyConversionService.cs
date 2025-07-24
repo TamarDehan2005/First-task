@@ -16,6 +16,18 @@ namespace BLL.Services
             _httpClient = httpClient;
         }
 
+        //public async Task<decimal> ConvertToUSD(Currency currency, decimal amount)
+        //{
+        //    if (currency == Currency.USD)
+        //    {
+        //        return amount;
+        //    }
+
+        //    var response = await _httpClient.GetStringAsync($"https://api.exchangerate-api.com/v4/latest/{currency}");
+        //    var exchangeRates = JsonConvert.DeserializeObject<ExchangeRateResponse>(response);
+
+        //    return amount * exchangeRates.Rates["USD"];
+        //}
         public async Task<decimal> ConvertToUSD(Currency currency, decimal amount)
         {
             if (currency == Currency.USD)
@@ -23,10 +35,17 @@ namespace BLL.Services
                 return amount;
             }
 
-            var response = await _httpClient.GetStringAsync($"https://api.exchangerate-api.com/v4/latest/{currency}");
-            var exchangeRates = JsonConvert.DeserializeObject<ExchangeRateResponse>(response);
+            try
+            {
+                var response = await _httpClient.GetStringAsync($"https://api.exchangerate-api.com/v4/latest/{currency}");
+                var exchangeRates = JsonConvert.DeserializeObject<ExchangeRateResponse>(response);
 
-            return amount * exchangeRates.Rates["USD"];
+                return amount * exchangeRates.Rates["USD"];
+            }
+            catch (Exception ex)
+            {
+                return amount; 
+            }
         }
     }
 }

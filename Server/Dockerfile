@@ -21,6 +21,10 @@ RUN dotnet publish API -c Release -o /app/publish
 # Final runtime image
 FROM mcr.microsoft.com/dotnet/aspnet:8.0
 WORKDIR /app
+
+# Install SSL certificates for HTTPS and secure API calls
+RUN apt-get update && apt-get install -y ca-certificates
+
 COPY --from=build /app/publish .
 
 ENTRYPOINT ["dotnet", "API.dll"]

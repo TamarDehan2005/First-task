@@ -22,15 +22,14 @@ namespace API.Controllers
             try
             {
                 var total = await _paymentBLL.GetTotalPaymentsByMonthAsync(DateTime.UtcNow.AddMonths(-1));
-                var totalRounded = (int)Math.Round(total); 
+                var totalRounded = (int)Math.Round(total);
                 return Ok(totalRounded);
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return Ok(0);
             }
         }
-
 
         [HttpGet("percentage-change")]
         public async Task<ActionResult<string>> GetPercentageChangeLastMonth()
