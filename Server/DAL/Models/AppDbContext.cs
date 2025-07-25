@@ -22,12 +22,12 @@ namespace DAL.Models
 
             modelBuilder.Entity<Invoice>()
                 .HasOne(i => i.User)
-                .WithMany()
+                .WithMany(u => u.Invoices)
                 .HasForeignKey(i => i.UserId);
 
             modelBuilder.Entity<Payment>()
                 .HasOne(p => p.User)
-                .WithMany()
+                .WithMany(u => u.Payments)
                 .HasForeignKey(p => p.UserId);
         }
     }

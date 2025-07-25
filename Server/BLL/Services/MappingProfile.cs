@@ -10,6 +10,7 @@ namespace BLL.Services
         {
             CreateMap<Payment, PaymentDTO>().ReverseMap();
             CreateMap<Invoice, InvoiceDTO>().ReverseMap();
+            CreateMap<User, UserDTO>().ReverseMap();
         }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace DAL.Models
 {
-    public class User
+    public class UserDTO
     {
         [Key]
         public int UserId { get; set; }
@@ -21,9 +21,5 @@ namespace DAL.Models
 
         [Required]
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-
-        public ICollection<Invoice> Invoices { get; set; } = new List<Invoice>();
-
-        public ICollection<Payment> Payments { get; set; } = new List<Payment>();
     }
 }
