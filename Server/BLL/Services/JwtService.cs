@@ -16,7 +16,6 @@ namespace BLL.Services
         private readonly string _audience;
         private readonly string _secretKey;
 
-
         public JwtService(IConfiguration configuration)
         {
             _issuer = configuration["JwtSettings:Issuer"];
@@ -38,11 +37,11 @@ namespace BLL.Services
         {
             var claims = new[]
             {
-        new Claim("id", id.ToString()),
-        new Claim("username", username),
-        new Claim("email", email),
-        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
-    };
+                new Claim("id", id.ToString()),
+                new Claim("username", username),
+                new Claim("email", email),
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+            };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_secretKey));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
@@ -51,14 +50,11 @@ namespace BLL.Services
                 issuer: _issuer,
                 audience: _audience,
                 claims: claims,
-                expires: DateTime.Now.AddMinutes(7),
+                expires: DateTime.UtcNow.AddMinutes(60),
                 signingCredentials: creds);
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
-
-
-
 
         public void SetTokenCookie(HttpResponse response, string token)
         {

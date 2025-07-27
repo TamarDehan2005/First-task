@@ -1,45 +1,46 @@
-﻿
-using BLL.Api;
+﻿using BLL.Api;
+using BLL.Services;
 using DAL.Api;
+using DAL.Services;
 
 public class PaymentBLL : IPaymentBLL
 {
-    private readonly IPaymentsDAL _paymentsDAL;
-    private readonly ICurrencyConversionService _currencyConversionService;
+    private readonly IPaymentsDAL _paymentsDal;
+    private readonly IUserDAL _userDal;
+    private readonly ICurrencyConversionService _currencyConversion;
 
-    public PaymentBLL(IPaymentsDAL paymentsDAL, ICurrencyConversionService currencyConversionService)
+    public PaymentBLL(IPaymentsDAL paymentsDal, IUserDAL userDal, ICurrencyConversionService currencyConversion)
     {
-        _paymentsDAL = paymentsDAL;
-        _currencyConversionService = currencyConversionService;
+        _paymentsDal = paymentsDal;
+        _userDal = userDal;
+        _currencyConversion = currencyConversion;
     }
 
-    public async Task<decimal> GetTotalPaymentsByMonthAsync(DateTime date)
+    public async Task<decimal> GetTotalPaymentsByMonthAsync(DateTime date, string email)
     {
-        var payments = await _paymentsDAL.GetAllPaymentsAsync();
-        if (payments == null)
+        var user = await _userDal.GetUserByEmailAsync(email);
+        if (user == null)
         {
-            throw new ApplicationException("Failed to retrieve payments.");
+            throw new ApplicationException("Failed to retrieve user.");
         }
-        var monthlyPayments = payments
-            .Where(p => p.PaymentDate.Month == date.Month && p.PaymentDate.Year == date.Year)
-            .ToList();
+
+        var monthlyPayments = await _paymentsDal.GetTotalPaymentsByDateRangeAsync(user.UserId, date);
 
         decimal totalSumInUSD = 0;
 
         foreach (var payment in monthlyPayments)
         {
-            totalSumInUSD += await _currencyConversionService.ConvertToUSD(payment.Currency, payment.Amount);
+            totalSumInUSD += await _currencyConversion.ConvertToUSD(payment.Currency, payment.Amount);
         }
 
         return totalSumInUSD;
     }
-
-    public async Task<string> GetPercentageChangeLastMonthAsync()
+    public async Task<string> GetPercentageChangeLastMonthAsync(string email)
     {
         var lastMonth = DateTime.UtcNow.AddMonths(-1);
-        var lastMonthTotal = await GetTotalPaymentsByMonthAsync(lastMonth);
+        var lastMonthTotal = await GetTotalPaymentsByMonthAsync(lastMonth,email);
         var twoMonthsAgo = DateTime.UtcNow.AddMonths(-2);
-        var twoMonthsAgoTotal = await GetTotalPaymentsByMonthAsync(twoMonthsAgo);
+        var twoMonthsAgoTotal = await GetTotalPaymentsByMonthAsync(twoMonthsAgo, email);
 
         if (twoMonthsAgoTotal == 0)
         {
@@ -50,5 +51,4 @@ public class PaymentBLL : IPaymentBLL
         int rounded = (int)Math.Round(percentageChange);
         return rounded >= 0 ? $"+{rounded}%" : $"{rounded}%";
     }
-
 }

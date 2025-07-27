@@ -1,10 +1,7 @@
-﻿using BLL;
-using BLL.Api;
-using BLL.Models;
+﻿using BLL.Api;
 using DAL.Models;
 using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace WEB.Controllers
 {
@@ -31,21 +28,18 @@ namespace WEB.Controllers
 
             return Ok("User registered successfully");
         }
-       
+
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginRequest request)
         {
             var user = await _userBll.AuthenticateAsync(request.Email, request.Password);
 
             if (user == null)
-                return Unauthorized("Invalid credentials");
+                return BadRequest("Invalid credentials");
 
             var token = _jwtService.GenerateToken(user.UserId, user.Email, user.FullName);
             return Ok(new { token });
         }
-
-
-
 
         [HttpPost]
         public async Task<ActionResult> AddUser([FromBody] UserDTO userDto)

@@ -6,29 +6,29 @@ namespace BLL.Services
     public class InvoiceBLL : IInvoiceBLL
     {
         private readonly IInvoicesDAL _invoicesDAL;
+        private readonly IUserDAL _userDAL;
 
-        public InvoiceBLL(IInvoicesDAL invoicesDAL)
+        public InvoiceBLL(IInvoicesDAL invoicesDAL, IUserDAL userDAL)
         {
             _invoicesDAL = invoicesDAL;
+            _userDAL = userDAL;
         }
 
-        public async Task<int> GetInvoiceCountByMonthAsync(DateTime date)
+        public async Task<int> GetInvoiceCountByMonthAsync(DateTime date, string email)
         {
-            var invoices = await _invoicesDAL.GetAllInvoicesAsync();
-            if (invoices == null)
-            {
-                throw new ApplicationException("Failed to retrieve invoices.");
-            }
-            return invoices
-                .Count(i => i.IssueDate.Month == date.Month && i.IssueDate.Year == date.Year);
+            var user = await _userDAL.GetUserByEmailAsync(email);
+            if (user == null) return 0;
+
+            var invoices = await _invoicesDAL.GetInvoicesByUserIdPerMonthAsync(user.UserId, date);
+            return invoices;
         }
 
-        public async Task<string> GetPercentageChangeLastMonthAsync()
+        public async Task<string> GetPercentageChangeLastMonthAsync(string email)
         {
             var lastMonth = DateTime.UtcNow.AddMonths(-1);
-            var lastMonthTotal = await GetInvoiceCountByMonthAsync(lastMonth);
+            var lastMonthTotal = await GetInvoiceCountByMonthAsync(lastMonth, email);
             var twoMonthsAgo = DateTime.UtcNow.AddMonths(-2);
-            var twoMonthsAgoTotal = await GetInvoiceCountByMonthAsync(twoMonthsAgo);
+            var twoMonthsAgoTotal = await GetInvoiceCountByMonthAsync(twoMonthsAgo, email);
 
             if (twoMonthsAgoTotal == 0)
             {
@@ -39,6 +39,5 @@ namespace BLL.Services
             int rounded = (int)Math.Round(percentageChange);
             return rounded >= 0 ? $"+{rounded}%" : $"{rounded}%";
         }
-
     }
 }

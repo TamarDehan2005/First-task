@@ -16,11 +16,11 @@ namespace API.Controllers
         }
 
         [HttpGet("total")]
-        public async Task<ActionResult<int>> GetTotalPayments()
+        public async Task<ActionResult<int>> GetTotalPayments([FromQuery] string email)
         {
             try
             {
-                var total = await _paymentBLL.GetTotalPaymentsByMonthAsync(DateTime.UtcNow.AddMonths(-1));
+                var total = await _paymentBLL.GetTotalPaymentsByMonthAsync(DateTime.UtcNow.AddMonths(-1), email);
                 var totalRounded = (int)Math.Round(total);
                 return Ok(totalRounded);
             }
@@ -31,11 +31,11 @@ namespace API.Controllers
         }
 
         [HttpGet("percentage-change")]
-        public async Task<ActionResult<string>> GetPercentageChangeLastMonth()
+        public async Task<ActionResult<string>> GetPercentageChangeLastMonth([FromQuery] string email)
         {
             try
             {
-                var percentageChange = await _paymentBLL.GetPercentageChangeLastMonthAsync();
+                var percentageChange = await _paymentBLL.GetPercentageChangeLastMonthAsync(email);
                 return Ok(percentageChange);
             }
             catch (Exception ex)

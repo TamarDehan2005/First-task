@@ -1,6 +1,7 @@
 ﻿using BLL.Api;
 using BLL.Models;
 using DAL.Enums;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 
 namespace BLL.Services
@@ -8,11 +9,13 @@ namespace BLL.Services
     public class CurrencyConversionService : ICurrencyConversionService
     {
         private readonly HttpClient _httpClient;
-
-        public CurrencyConversionService(HttpClient httpClient)
+        private readonly IConfiguration _configuration;
+        public CurrencyConversionService(HttpClient httpClient, IConfiguration configuration)
         {
             _httpClient = httpClient;
+            _configuration = configuration;
         }
+
         public async Task<decimal> ConvertToUSD(Currency currency, decimal amount)
         {
             if (currency == Currency.USD)
@@ -22,7 +25,8 @@ namespace BLL.Services
 
             try
             {
-                var response = await _httpClient.GetStringAsync($"https://api.exchangerate-api.com/v4/latest/{currency}");
+                var baseUrl = _configuration["CurrrencyApi:ExchangeRateUrl"];
+                var response = await _httpClient.GetStringAsync($"{baseUrl}{currency}");
                 var exchangeRates = JsonConvert.DeserializeObject<ExchangeRateResponse>(response);
 
                 return amount * exchangeRates.Rates["USD"];

@@ -2,7 +2,7 @@
 {
     public interface IPaymentBLL
     {
-        Task<string> GetPercentageChangeLastMonthAsync();
-        Task<decimal> GetTotalPaymentsByMonthAsync(DateTime date);
+        Task<decimal> GetTotalPaymentsByMonthAsync(DateTime month, string email);
+        Task<string> GetPercentageChangeLastMonthAsync(string email);
     }
 }

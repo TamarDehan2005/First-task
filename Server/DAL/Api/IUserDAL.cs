@@ -10,5 +10,6 @@ namespace DAL.Api
         Task<User?> GetUserByEmailAndPasswordAsync(string email, string password);
         Task<User?> GetUserByIdAsync(int id);
         Task<User?> GetUserByEmailAsync(string email);
+        Task UpdateUserAsync(User user);
     }
 }

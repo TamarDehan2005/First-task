@@ -1,5 +1,6 @@
 using AutoMapper;
 using BLL.Api;
+using BLL.Models;
 using BLL.Services;
 using DAL;
 using DAL.Api;
@@ -27,8 +28,12 @@ builder.Services.AddScoped<ICurrencyConversionService, CurrencyConversionService
 builder.Services.AddScoped<IUserBLL, UserBLL>();
 builder.Services.AddScoped<IUserDAL, UserDAL>();
 builder.Services.AddScoped<IJwtService, JwtService>();
+builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
+builder.Services.AddScoped<IPasswordResetService, PasswordResetService>();
 
-
+builder.Services.Configure<SmtpSettings>(builder.Configuration.GetSection("SmtpSettings"));
+builder.Services.AddScoped<IEmailService, EmailService>();
+builder.Services.AddScoped<PasswordResetService>();
 
 
 builder.Services.AddHttpClient();

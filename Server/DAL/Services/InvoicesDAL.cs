@@ -17,5 +17,15 @@ namespace DAL.Services
         {
             return await _context.Invoices.ToListAsync();
         }
+
+        public async Task<int> GetInvoicesByUserIdPerMonthAsync(int userId, DateTime date)
+        {
+            var invoices = await _context.Invoices
+                .Where(i => i.UserId == userId)
+                .ToListAsync();
+
+            return invoices.Count(i => i.IssueDate.Month == date.Month && i.IssueDate.Year == date.Year);
+        }
+
     }
 }
